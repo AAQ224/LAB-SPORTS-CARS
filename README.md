@@ -2,7 +2,7 @@
 
 
 
-## Create a website for a real estate agency (RealEstate) , the website should have a home page that looks like the image below , you should :
+## Create a website for a sports cars dealership (SportsCars) , the website should have a home page that looks like the image below , you should :
 - use templates & templates inheritance.
 - use google fonts (choose the same font `Phudu` , or a similar one) [https://fonts.google.com](https://fonts.google.com)
 - use google fonts icons (choose similar icons) [https://fonts.google.com/icons](https://fonts.google.com/icons)
