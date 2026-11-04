@@ -1,0 +1,24 @@
+
+{% extends "cars/base.html" %}
+
+{% block title %}{{ car.name }} | SportsCars{% endblock %}
+
+{% block content %}
+
+<section>
+    <h1>{{ car.name }}</h1>
+
+    <p>Brand: {{ car.brand }}</p>
+
+    <p>Price: SAR {{ car.price }}</p>
+
+    <p>Engine: {{ car.engine }}</p>
+
+    <p>Horsepower: {{ car.horsepower }} HP</p>
+
+    <a href="{% url 'cars:all_cars' %}">
+        Back to All Cars
+    </a>
+</section>
+
+{% endblock %}

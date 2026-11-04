@@ -1,0 +1,38 @@
+
+{% extends "cars/base.html" %}
+
+{% block title %}Home | SportsCars{% endblock %}
+
+{% block content %}
+
+<section>
+    <h1>Performance Without Limits</h1>
+
+    <p>
+        Explore a curated collection of iconic sports cars.
+    </p>
+
+    <a href="{% url 'cars:all_cars' %}">
+        Browse Cars
+    </a>
+</section>
+
+<section>
+    <h2>Featured Cars</h2>
+
+    <p>Discover our exclusive sports cars collection.</p>
+
+    <a href="{% url 'cars:car_detail' 1 %}">
+        Porsche 911 Turbo S
+    </a>
+
+    <a href="{% url 'cars:car_detail' 2 %}">
+        Ferrari F8 Tributo
+    </a>
+
+    <a href="{% url 'cars:car_detail' 3 %}">
+        Lamborghini Huracán
+    </a>
+</section>
+
+{% endblock %}

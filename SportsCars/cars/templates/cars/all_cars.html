@@ -1,0 +1,43 @@
+
+{% extends "cars/base.html" %}
+
+{% block title %}All Cars | SportsCars{% endblock %}
+
+{% block content %}
+
+<section>
+    <h1>All Cars</h1>
+
+    <p>Explore our complete collection of sports cars.</p>
+
+    <div>
+        <article>
+            <h2>Porsche 911 Turbo S</h2>
+            <p>SAR 1,295,000</p>
+
+            <a href="{% url 'cars:car_detail' 1 %}">
+                View Details
+            </a>
+        </article>
+
+        <article>
+            <h2>Ferrari F8 Tributo</h2>
+            <p>SAR 1,490,000</p>
+
+            <a href="{% url 'cars:car_detail' 2 %}">
+                View Details
+            </a>
+        </article>
+
+        <article>
+            <h2>Lamborghini Huracán</h2>
+            <p>SAR 1,420,000</p>
+
+            <a href="{% url 'cars:car_detail' 3 %}">
+                View Details
+            </a>
+        </article>
+    </div>
+</section>
+
+{% endblock %}
