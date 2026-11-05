@@ -1,38 +1,297 @@
 
 {% extends "cars/base.html" %}
+{% load static %}
 
 {% block title %}Home | SportsCars{% endblock %}
 
 {% block content %}
 
-<section>
-    <h1>Performance Without Limits</h1>
+<!-- ========== 3D HERO ========== -->
+<section class="hero-3d" id="showroom">
 
-    <p>
-        Explore a curated collection of iconic sports cars.
-    </p>
+    <div class="hero-3d-inner">
 
-    <a href="{% url 'cars:all_cars' %}">
-        Browse Cars
-    </a>
+        <!-- FULL WIDTH 3D VIEWER -->
+        <div class="hero-3d-stage">
+
+            <model-viewer
+                id="hero-car-model"
+                src="{% static 'cars/models/2024_porsche_992_gt3_r.glb' %}"
+                alt="Interactive 3D Porsche 992 GT3 R"
+                camera-controls
+                disable-zoom
+                auto-rotate
+                rotation-per-second="12deg"
+                shadow-intensity="1"
+                exposure="1.15"
+                environment-image="neutral"
+                touch-action="pan-y"
+                loading="eager">
+            </model-viewer>
+
+            <p
+                class="model-status"
+                id="model-status"
+                role="status"
+                aria-live="polite">
+                Loading 3D model...
+            </p>
+
+            <div class="model-hint">
+                <span class="material-symbols-outlined">
+                    360
+                </span>
+                DRAG TO ROTATE
+            </div>
+
+        </div>
+
+        <!-- DARK LAYER FOR READABILITY -->
+        <div
+            class="hero-readability-overlay"
+            aria-hidden="true">
+        </div>
+
+        <!-- HERO CONTENT -->
+        <div class="hero-3d-content">
+
+            <span class="eyebrow">
+                INTERACTIVE 3D SHOWROOM
+            </span>
+
+            <h1>
+                CHOOSE YOUR
+                <span>DRIVE.</span>
+            </h1>
+
+            <p class="hero-description">
+                Experience the world's most extraordinary
+                sports cars in an immersive 3D showroom.
+                Choose your machine and explore it in 360°.
+            </p>
+
+            <!-- CAR SWITCHER -->
+            <div
+                class="car-switcher"
+                role="group"
+                aria-label="Select sports car">
+
+                <button
+                    type="button"
+                    class="switch-btn active"
+                    data-model="{% static 'cars/models/2024_porsche_992_gt3_r.glb' %}"
+                    data-car-name="Porsche 992 GT3 R"
+                    data-detail-url="{% url 'cars:car_detail' 1 %}"
+                    aria-pressed="true">
+                    PORSCHE
+                </button>
+
+                <button
+                    type="button"
+                    class="switch-btn"
+                    data-model="{% static 'cars/models/2026_bugatti_tourbillon.glb' %}"
+                    data-car-name="Bugatti Tourbillon"
+                    data-detail-url="{% url 'cars:car_detail' 2 %}"
+                    aria-pressed="false">
+                    BUGATTI
+                </button>
+
+                <button
+                    type="button"
+                    class="switch-btn"
+                    data-model="{% static 'cars/models/chevrolet_corvette_c7.glb' %}"
+                    data-car-name="Chevrolet Corvette C7"
+                    data-detail-url="{% url 'cars:car_detail' 3 %}"
+                    aria-pressed="false">
+                    CORVETTE
+                </button>
+
+            </div>
+
+            <p
+                class="selected-car-name"
+                id="selected-car-name"
+                aria-live="polite">
+                PORSCHE 992 GT3 R
+            </p>
+
+            <!-- HERO BUTTONS -->
+            <div class="hero-buttons">
+
+                <a
+                    href="{% url 'cars:car_detail' 1 %}"
+                    id="hero-details-link"
+                    class="btn btn-primary">
+                    VIEW DETAILS
+                    <span class="material-symbols-outlined">
+                        arrow_outward
+                    </span>
+                </a>
+
+                <a
+                    href="{% url 'cars:all_cars' %}"
+                    class="btn btn-outline">
+                    ALL CARS
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
 </section>
 
-<section>
-    <h2>Featured Cars</h2>
 
-    <p>Discover our exclusive sports cars collection.</p>
+<!-- ========== FEATURED CARS ========== -->
+<section class="featured-section">
 
-    <a href="{% url 'cars:car_detail' 1 %}">
-        Porsche 911 Turbo S
+    <div class="section-header">
+
+        <div>
+            <span class="section-label">
+                THE COLLECTION
+            </span>
+
+            <h2>
+                FEATURED <span>CARS.</span>
+            </h2>
+        </div>
+
+        <a
+            href="{% url 'cars:all_cars' %}"
+            class="view-all">
+            VIEW ALL CARS
+            <span class="material-symbols-outlined">
+                arrow_outward
+            </span>
+        </a>
+
+    </div>
+
+    <div class="cars-grid">
+
+        {% for car in featured_cars %}
+
+        <article class="car-card">
+
+            <a
+                href="{% url 'cars:car_detail' car.id %}"
+                class="car-preview car-preview-{{ car.id }}">
+
+                {% if car.image %}
+
+                    <img
+                        src="{% static car.image %}"
+                        alt="{{ car.name }}"
+                        class="car-preview-image"
+                        loading="lazy">
+
+                {% else %}
+
+                    <span class="car-preview-brand">
+                        {{ car.brand }}
+                    </span>
+
+                    <span class="material-symbols-outlined car-preview-icon">
+                        directions_car
+                    </span>
+
+                {% endif %}
+
+                <span class="car-badge">
+                    EXCLUSIVE
+                </span>
+
+            </a>
+
+            <div class="car-info">
+
+                <span class="car-brand">
+                    {{ car.brand }} / {{ car.year }}
+                </span>
+
+                <h3>{{ car.name }}</h3>
+
+                <div class="car-specs">
+
+                    <span>
+                        <span class="material-symbols-outlined">
+                            speed
+                        </span>
+                        {{ car.horsepower }} HP
+                    </span>
+
+                    <span>
+                        <span class="material-symbols-outlined">
+                            settings
+                        </span>
+                        {{ car.engine }}
+                    </span>
+
+                </div>
+
+                <div class="car-bottom">
+
+                    <div>
+                        <small>PRICE</small>
+                        <strong>{{ car.price }}</strong>
+                    </div>
+
+                    <a
+                        href="{% url 'cars:car_detail' car.id %}"
+                        class="car-arrow"
+                        aria-label="View {{ car.name }}">
+                        <span class="material-symbols-outlined">
+                            arrow_outward
+                        </span>
+                    </a>
+
+                </div>
+
+            </div>
+
+        </article>
+
+        {% empty %}
+
+        <p>No cars available at the moment.</p>
+
+        {% endfor %}
+
+    </div>
+
+</section>
+
+
+<!-- ========== CTA SECTION ========== -->
+<section class="cta-section">
+
+    <span class="section-label">
+        YOUR NEXT ADVENTURE STARTS HERE
+    </span>
+
+    <h2>
+        READY TO FEEL THE <span>THRILL?</span>
+    </h2>
+
+    <p>
+        Explore extraordinary machines built for
+        performance, engineering and driving passion.
+    </p>
+
+    <a
+        href="{% url 'cars:all_cars' %}"
+        class="btn btn-primary">
+
+        DISCOVER THE COLLECTION
+
+        <span class="material-symbols-outlined">
+            arrow_outward
+        </span>
+
     </a>
 
-    <a href="{% url 'cars:car_detail' 2 %}">
-        Ferrari F8 Tributo
-    </a>
-
-    <a href="{% url 'cars:car_detail' 3 %}">
-        Lamborghini Huracán
-    </a>
 </section>
 
 {% endblock %}

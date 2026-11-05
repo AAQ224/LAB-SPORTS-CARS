@@ -5,29 +5,110 @@
 
 {% block content %}
 
-<section>
-    <h1>Driven by Passion</h1>
+<section class="page-intro about-intro">
+
+    <span class="section-label">
+        WHO WE ARE
+    </span>
+
+    <h1>DRIVEN BY <span>PASSION.</span></h1>
 
     <p>
-        We are a team of automotive enthusiasts dedicated
-        to bringing the world's finest sports cars closer to you.
+        SportsCars is an automotive showroom concept
+        built to celebrate the world's most extraordinary
+        performance machines.
     </p>
 
-    <h2>Our Story</h2>
+</section>
+
+<section class="about-section">
+
+    <div class="about-grid">
+
+        <div class="about-heading">
+            <span class="section-label">
+                OUR STORY
+            </span>
+
+            <h2>
+                MORE THAN <span>JUST CARS.</span>
+            </h2>
+        </div>
+
+        <div class="about-text">
+
+            <p>
+                At SportsCars, we believe that exceptional
+                vehicles represent more than speed.
+                They represent creativity, engineering,
+                innovation and a passion for driving.
+            </p>
+
+            <p>
+                Our digital experience brings legendary
+                machines closer to automotive enthusiasts
+                through immersive 3D technology.
+            </p>
+
+        </div>
+
+    </div>
+
+    <div class="values-grid">
+
+        <article class="value-card">
+            <span class="material-symbols-outlined">
+                bolt
+            </span>
+            <h3>PERFORMANCE</h3>
+            <p>
+                Celebrating machines built to push boundaries.
+            </p>
+        </article>
+
+        <article class="value-card">
+            <span class="material-symbols-outlined">
+                verified
+            </span>
+            <h3>EXCELLENCE</h3>
+            <p>
+                Showcasing remarkable engineering and design.
+            </p>
+        </article>
+
+        <article class="value-card">
+            <span class="material-symbols-outlined">
+                favorite
+            </span>
+            <h3>PASSION</h3>
+            <p>
+                Created for people who truly love automobiles.
+            </p>
+        </article>
+
+    </div>
+
+</section>
+
+<section class="cta-section">
+
+    <span class="section-label">
+        JOIN THE EXPERIENCE
+    </span>
+
+    <h2>DISCOVER YOUR <span>DREAM CAR.</span></h2>
 
     <p>
-        Founded in Saudi Arabia, SportsCars was created
-        for people who share a deep passion for performance,
-        design, and engineering excellence.
+        Explore our collection of sports cars and hypercars.
     </p>
 
-    <h2>Our Values</h2>
-
-    <ul>
-        <li>Excellence</li>
-        <li>Trust</li>
-        <li>Passion</li>
-    </ul>
+    <a href="{% url 'cars:all_cars' %}"
+       class="btn btn-primary">
+        EXPLORE CARS
+        <span class="material-symbols-outlined">
+            arrow_outward
+        </span>
+    </a>
 
 </section>
 

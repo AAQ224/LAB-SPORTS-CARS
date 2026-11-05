@@ -1,38 +1,80 @@
-from django.shortcuts import render
-from django.http import HttpRequest, HttpResponse, Http404
 
-# Create your views here.
+from django.http import Http404
+from django.shortcuts import render
+
 
 cars_data = {
     1: {
-        "name": "Porsche 911 Turbo S",
+        "id": 1,
+        "name": "Porsche 992 GT3 R",
         "brand": "Porsche",
-        "price": "1,295,000",
-        "engine": "3.8L Twin-Turbo",
-        "horsepower": 640,
+        "year": 2024,
+        "engine": "4.2L Flat-Six",
+        "horsepower": 565,
+        "price": "Contact for Price",
+        "model": "cars/models/2024_porsche_992_gt3_r.glb",
+        "image": "cars/images/Porsche 992 GT3 R.png",
+        "description": (
+            "Built for the race track, the Porsche 911 GT3 R "
+            "combines precision engineering, aerodynamics "
+            "and uncompromising performance."
+        ),
     },
     2: {
-        "name": "Ferrari F8 Tributo",
-        "brand": "Ferrari",
-        "price": "1,490,000",
-        "engine": "3.9L Twin-Turbo V8",
-        "horsepower": 710,
+        "id": 2,
+        "name": "Bugatti Tourbillon",
+        "brand": "Bugatti",
+        "year": 2026,
+        "engine": "8.3L V16 Hybrid",
+        "horsepower": 1800,
+        "price": "Contact for Price",
+        "model": "cars/models/2026_bugatti_tourbillon.glb",
+        "image": "cars/images/Bugatti Tourbillon.png",
+        "description": (
+            "An extraordinary hypercar combining a naturally "
+            "aspirated V16 engine with electric power "
+            "and exceptional craftsmanship."
+        ),
     },
     3: {
-        "name": "Lamborghini Huracán",
-        "brand": "Lamborghini",
-        "price": "1,420,000",
-        "engine": "5.2L V10",
-        "horsepower": 631,
+        "id": 3,
+        "name": "Chevrolet Corvette C7",
+        "brand": "Chevrolet",
+        "year": 2014,
+        "engine": "6.2L V8",
+        "horsepower": 455,
+        "price": "Contact for Price",
+        "model": "cars/models/chevrolet_corvette_c7.glb",
+        "image": "cars/images/Chevrolet Corvette C7.png",
+        "description": (
+            "The seventh-generation Corvette delivers "
+            "an iconic American sports-car experience "
+            "with aggressive styling and V8 performance."
+        ),
     },
 }
 
+
 def home(request):
-    return render(request, "cars/home.html")
+    featured_cars = list(cars_data.values())
+
+    return render(
+        request,
+        "cars/home.html",
+        {
+            "featured_cars": featured_cars,
+        },
+    )
 
 
 def all_cars(request):
-    return render(request, "cars/all_cars.html")
+    return render(
+        request,
+        "cars/all_cars.html",
+        {
+            "cars": list(cars_data.values()),
+        },
+    )
 
 
 def car_detail(request, car_id):
@@ -41,9 +83,13 @@ def car_detail(request, car_id):
     if car is None:
         raise Http404("Car not found")
 
-    return render(request, "cars/car_detail.html", {
-        "car": car
-    })
+    return render(
+        request,
+        "cars/car_detail.html",
+        {
+            "car": car,
+        },
+    )
 
 
 def about(request):

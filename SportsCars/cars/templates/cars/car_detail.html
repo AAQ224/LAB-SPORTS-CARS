@@ -1,24 +1,109 @@
 
 {% extends "cars/base.html" %}
+{% load static %}
 
 {% block title %}{{ car.name }} | SportsCars{% endblock %}
 
 {% block content %}
 
-<section>
-    <h1>{{ car.name }}</h1>
+<section class="detail-section">
 
-    <p>Brand: {{ car.brand }}</p>
+    <div class="detail-heading">
 
-    <p>Price: SAR {{ car.price }}</p>
+        <a href="{% url 'cars:all_cars' %}"
+           class="back-link">
+            <span class="material-symbols-outlined">
+                arrow_back
+            </span>
+            BACK TO COLLECTION
+        </a>
 
-    <p>Engine: {{ car.engine }}</p>
+        <span class="section-label">
+            {{ car.brand }} / {{ car.year }}
+        </span>
 
-    <p>Horsepower: {{ car.horsepower }} HP</p>
+        <h1>{{ car.name }}</h1>
 
-    <a href="{% url 'cars:all_cars' %}">
-        Back to All Cars
-    </a>
+        <p>{{ car.description }}</p>
+
+    </div>
+
+    <div class="detail-grid">
+
+        <div class="detail-viewer-wrap">
+
+            <model-viewer
+                src="{% static car.model %}"
+                alt="Interactive 3D model of {{ car.name }}"
+                camera-controls
+                auto-rotate
+                rotation-per-second="10deg"
+                shadow-intensity="1"
+                exposure="1.15"
+                environment-image="neutral"
+                touch-action="pan-y"
+                loading="eager">
+            </model-viewer>
+
+            <div class="detail-viewer-label">
+                <span class="material-symbols-outlined">
+                    360
+                </span>
+                INTERACTIVE 3D VIEW
+            </div>
+
+        </div>
+
+        <div class="detail-info">
+
+            <span class="section-label">
+                VEHICLE SPECIFICATIONS
+            </span>
+
+            <h2>ENGINEERED FOR <span>EXCELLENCE.</span></h2>
+
+            <div class="spec-row">
+                <span>MANUFACTURER</span>
+                <strong>{{ car.brand }}</strong>
+            </div>
+
+            <div class="spec-row">
+                <span>MODEL</span>
+                <strong>{{ car.name }}</strong>
+            </div>
+
+            <div class="spec-row">
+                <span>MODEL YEAR</span>
+                <strong>{{ car.year }}</strong>
+            </div>
+
+            <div class="spec-row">
+                <span>ENGINE</span>
+                <strong>{{ car.engine }}</strong>
+            </div>
+
+            <div class="spec-row">
+                <span>HORSEPOWER</span>
+                <strong>{{ car.horsepower }} HP</strong>
+            </div>
+
+            <div class="spec-row">
+                <span>PRICE</span>
+                <strong>{{ car.price }}</strong>
+            </div>
+
+            <a href="{% url 'cars:all_cars' %}"
+               class="btn btn-primary detail-button">
+                EXPLORE MORE CARS
+                <span class="material-symbols-outlined">
+                    arrow_outward
+                </span>
+            </a>
+
+        </div>
+
+    </div>
+
 </section>
 
 {% endblock %}

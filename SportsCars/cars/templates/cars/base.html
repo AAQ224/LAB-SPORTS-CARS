@@ -1,33 +1,140 @@
 
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>{% block title %}SportsCars{% endblock %}</title>
+    <title>
+        {% block title %}SportsCars{% endblock %}
+    </title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Phudu:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap"
+        rel="stylesheet"
+    >
+
+    <!-- Material Symbols -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"
+        rel="stylesheet"
+    >
+
+    <!-- Main CSS -->
+    <link
+        rel="stylesheet"
+        href="{% static 'cars/css/style.css' %}"
+    >
+
+    <!-- 3D Model Viewer -->
+    <script
+        type="module"
+        src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.1.0/model-viewer.min.js">
+    </script>
+
+    {% block extra_head %}{% endblock %}
 </head>
 
 <body>
 
-    <header>
-        <nav>
-            <h2>SportsCars</h2>
+    <!-- NAVBAR -->
+    <header class="site-header">
+        <nav class="navbar">
 
-            <a href="{% url 'cars:home' %}">Home</a>
-            <a href="{% url 'cars:all_cars' %}">Cars</a>
-            <a href="{% url 'cars:about' %}">About Us</a>
+            <a href="{% url 'cars:home' %}" class="logo">
+                SPORTS<span>CARS.</span>
+            </a>
+
+            <div class="nav-links">
+                <a href="{% url 'cars:home' %}">
+                    HOME
+                </a>
+
+                <a href="{% url 'cars:all_cars' %}">
+                    OUR CARS
+                </a>
+
+                <a href="{% url 'cars:about' %}">
+                    ABOUT US
+                </a>
+            </div>
+
+            <div class="nav-actions">
+
+                <button
+                    type="button"
+                    class="icon-btn"
+                    id="theme-toggle"
+                    aria-label="Toggle dark mode"
+                    aria-pressed="false">
+                    <span class="material-symbols-outlined">
+                        dark_mode
+                    </span>
+                </button>
+
+                <a
+                    href="{% url 'cars:all_cars' %}"
+                    class="nav-cta">
+                    EXPLORE CARS
+                    <span class="material-symbols-outlined">
+                        arrow_outward
+                    </span>
+                </a>
+
+            </div>
+
         </nav>
     </header>
 
+    <!-- PAGE CONTENT -->
     <main>
         {% block content %}
         {% endblock %}
     </main>
 
-    <footer>
-        <p>&copy; 2026 SportsCars. All rights reserved.</p>
+    <!-- FOOTER -->
+    <footer class="site-footer">
+
+        <div class="footer-content">
+
+            <a href="{% url 'cars:home' %}" class="logo">
+                SPORTS<span>CARS.</span>
+            </a>
+
+            <p>
+                BUILT FOR THOSE WHO LIVE TO DRIVE.
+            </p>
+
+            <div class="footer-links">
+                <a href="{% url 'cars:home' %}">Home</a>
+                <a href="{% url 'cars:all_cars' %}">Cars</a>
+                <a href="{% url 'cars:about' %}">About</a>
+            </div>
+
+            <p class="footer-note">
+                A concept automotive showroom created
+                for educational purposes.
+            </p>
+
+        </div>
+
+        <div class="footer-bottom">
+            <p>© 2026 SportsCars. All rights reserved.</p>
+            <p>Designed with passion.</p>
+        </div>
+
     </footer>
+
+    <script
+        src="{% static 'cars/js/main.js' %}"
+        defer>
+    </script>
 
 </body>
 </html>
