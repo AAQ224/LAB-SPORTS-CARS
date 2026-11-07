@@ -11,13 +11,17 @@
 
     <div class="hero-3d-inner">
 
+        {% with first_car=featured_cars.0 %}
+
         <!-- FULL WIDTH 3D VIEWER -->
         <div class="hero-3d-stage">
 
+            {% if first_car and first_car.model %}
+
             <model-viewer
                 id="hero-car-model"
-                src="{% static 'cars/models/2024_porsche_992_gt3_r.glb' %}"
-                alt="Interactive 3D Porsche 992 GT3 R"
+                src="{% static first_car.model %}"
+                alt="Interactive 3D {{ first_car.name }}"
                 camera-controls
                 disable-zoom
                 auto-rotate
@@ -43,6 +47,16 @@
                 </span>
                 DRAG TO ROTATE
             </div>
+
+            {% else %}
+
+            <div class="hero-empty-model">
+                <span class="material-symbols-outlined">
+                    directions_car
+                </span>
+            </div>
+
+            {% endif %}
 
         </div>
 
@@ -70,73 +84,87 @@
                 Choose your machine and explore it in 360°.
             </p>
 
-            <!-- CAR SWITCHER -->
+            <!-- ========== DYNAMIC CAR SWITCHER ========== -->
             <div
                 class="car-switcher"
                 role="group"
                 aria-label="Select sports car">
 
-                <button
-                    type="button"
-                    class="switch-btn active"
-                    data-model="{% static 'cars/models/2024_porsche_992_gt3_r.glb' %}"
-                    data-car-name="Porsche 992 GT3 R"
-                    data-detail-url="{% url 'cars:car_detail' 1 %}"
-                    aria-pressed="true">
-                    PORSCHE
-                </button>
+                {% for car in featured_cars %}
 
-                <button
-                    type="button"
-                    class="switch-btn"
-                    data-model="{% static 'cars/models/2026_bugatti_tourbillon.glb' %}"
-                    data-car-name="Bugatti Tourbillon"
-                    data-detail-url="{% url 'cars:car_detail' 2 %}"
-                    aria-pressed="false">
-                    BUGATTI
-                </button>
+                    {% if car.model %}
 
-                <button
-                    type="button"
-                    class="switch-btn"
-                    data-model="{% static 'cars/models/chevrolet_corvette_c7.glb' %}"
-                    data-car-name="Chevrolet Corvette C7"
-                    data-detail-url="{% url 'cars:car_detail' 3 %}"
-                    aria-pressed="false">
-                    CORVETTE
-                </button>
+                    <button
+                        type="button"
+                        class="switch-btn {% if car.id == first_car.id %}active{% endif %}"
+                        data-model="{% static car.model %}"
+                        data-car-name="{{ car.name }}"
+                        data-detail-url="{% url 'cars:car_detail' car.id %}"
+                        aria-pressed="{% if car.id == first_car.id %}true{% else %}false{% endif %}">
+
+                        {{ car.brand|upper }}
+
+                    </button>
+
+                    {% endif %}
+
+                {% empty %}
+
+                <p class="no-featured-cars">
+                    No featured cars available.
+                </p>
+
+                {% endfor %}
 
             </div>
 
+            <!-- SELECTED CAR NAME -->
             <p
                 class="selected-car-name"
                 id="selected-car-name"
                 aria-live="polite">
-                PORSCHE 992 GT3 R
+
+                {% if first_car %}
+                    {{ first_car.name|upper }}
+                {% else %}
+                    EXPLORE THE COLLECTION
+                {% endif %}
+
             </p>
 
             <!-- HERO BUTTONS -->
             <div class="hero-buttons">
 
+                {% if first_car %}
+
                 <a
-                    href="{% url 'cars:car_detail' 1 %}"
+                    href="{% url 'cars:car_detail' first_car.id %}"
                     id="hero-details-link"
                     class="btn btn-primary">
+
                     VIEW DETAILS
+
                     <span class="material-symbols-outlined">
                         arrow_outward
                     </span>
+
                 </a>
+
+                {% endif %}
 
                 <a
                     href="{% url 'cars:all_cars' %}"
                     class="btn btn-outline">
+
                     ALL CARS
+
                 </a>
 
             </div>
 
         </div>
+
+        {% endwith %}
 
     </div>
 
@@ -161,20 +189,25 @@
         <a
             href="{% url 'cars:all_cars' %}"
             class="view-all">
+
             VIEW ALL CARS
+
             <span class="material-symbols-outlined">
                 arrow_outward
             </span>
+
         </a>
 
     </div>
 
+    <!-- ========== CARS GRID ========== -->
     <div class="cars-grid">
 
         {% for car in featured_cars %}
 
         <article class="car-card">
 
+            <!-- CAR IMAGE -->
             <a
                 href="{% url 'cars:car_detail' car.id %}"
                 class="car-preview car-preview-{{ car.id }}">
@@ -205,6 +238,7 @@
 
             </a>
 
+            <!-- CAR INFORMATION -->
             <div class="car-info">
 
                 <span class="car-brand">
@@ -213,12 +247,14 @@
 
                 <h3>{{ car.name }}</h3>
 
+                <!-- CAR SPECS -->
                 <div class="car-specs">
 
                     <span>
                         <span class="material-symbols-outlined">
                             speed
                         </span>
+
                         {{ car.horsepower }} HP
                     </span>
 
@@ -226,25 +262,29 @@
                         <span class="material-symbols-outlined">
                             settings
                         </span>
+
                         {{ car.engine }}
                     </span>
 
                 </div>
 
+                <!-- PRICE AND DETAILS -->
                 <div class="car-bottom">
 
                     <div>
                         <small>PRICE</small>
-                        <strong>{{ car.price }}</strong>
+                        <strong>{{ car.formatted_price }}</strong>
                     </div>
 
                     <a
                         href="{% url 'cars:car_detail' car.id %}"
                         class="car-arrow"
                         aria-label="View {{ car.name }}">
+
                         <span class="material-symbols-outlined">
                             arrow_outward
                         </span>
+
                     </a>
 
                 </div>
@@ -255,7 +295,7 @@
 
         {% empty %}
 
-        <p>No cars available at the moment.</p>
+        <p>No featured cars available at the moment.</p>
 
         {% endfor %}
 
@@ -265,7 +305,7 @@
 
 
 <!-- ========== CTA SECTION ========== -->
-<section class="cta-section">
+<section class="cta-section home-cta-banner">
 
     <span class="section-label">
         YOUR NEXT ADVENTURE STARTS HERE
